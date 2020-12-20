@@ -1,0 +1,26 @@
+all: encoder decoder
+
+encoder: encoder.o libhw.a
+	gcc -std=c99 -o encoder encoder.o -L. -lhw
+
+decoder: decoder.o libhw.a
+	gcc -std=c99 -o decoder decoder.o -L. -lmineur
+	
+encoder.o: encoder.c
+	gcc -c -std=c99 encoder.c
+
+decoder.o: decoder.c
+	gcc -c -std=c99 decoder.c
+	
+libhw.a: strg.o cezar.o
+	ar cr libhw.a strg.o cezar.o
+	
+strg.o: strg.c
+	gcc -c -std=c99 strg.c
+	
+cezar.o: cezar.c
+	gcc -c -std=c99 cezar.c
+
+clean:
+	rm -rf *.o *.a encoder decoder
+
